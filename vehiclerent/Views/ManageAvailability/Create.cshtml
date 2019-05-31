@@ -1,0 +1,137 @@
+﻿@model vehiclerent.Models.VehicleAvailability
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    <title>Vehicle Rentals</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/css/linearicons.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/css/nice-select.css">
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Content/css/main.css">
+
+    <style>
+        body {
+            background-image: url('/Content/img/i2.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div style="display:flex;">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VehicleAvailableFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.VehicleAvailableFrom, new { @type = "date", @class = "form-control datepicker", })
+                        @Html.ValidationMessageFor(model => model.VehicleAvailableFrom, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VehicleAvailableTo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.VehicleAvailableTo, new { @type = "date", @class = "form-control datepicker", })
+                        @Html.ValidationMessageFor(model => model.VehicleAvailableTo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VehicleLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.VehicleLocation, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VehicleLocation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Latitude</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.latitude, new { @value = "6.927079", @id = "lat", @name = "lat", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.latitude, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Longitude</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.longitude, new { @value = "79.861244", @id = "long", @name = "long", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.longitude, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+        <br />
+        <div id="Map" style="width: 600px; height: 600px;margin:0 auto;">
+        </div>
+    </div>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        var map;
+
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(6.927079, 79.861244);
+
+            var myOptions = {
+                zoom: 8,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById("Map"), myOptions);
+
+            var marker = new google.maps.Marker({
+                draggable: true,
+                position: myLatlng,
+                map: map,
+                title: "Your location"
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                document.getElementById("lat").value = event.latLng.lat();
+                document.getElementById("long").value = event.latLng.lng();
+            });
+
+
+        }
+        google.maps.event.addDomListener(window, "load", initialize());
+    </script>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>
+

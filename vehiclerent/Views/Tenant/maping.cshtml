@@ -1,0 +1,63 @@
+﻿@model vehiclerent.Models.VehicleAvailability
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>maping</title>
+</head>
+<body>
+
+    <div class="form-group" style="width: 100px; height: 100px;margin:0 auto;">
+        @using (Html.BeginForm("maping", "Tenant", FormMethod.Post))
+            {
+            <label>Latitude</label>
+                @Html.TextBoxFor(model => model.latitude, new { @value = "6.927079", @id = "lat", @name = "lat", @class = "form-control" })
+
+                <label>Longitude</label>
+                @Html.TextBoxFor(model => model.longitude, new { @value = "79.861244", @id = "long", @name = "long", @class = "form-control" })
+
+                <input type="submit" value="Search" class="btn btn-warning" />
+        }
+    </div>
+    <br />
+    <div id="Map" style="width: 600px; height: 600px;margin:0 auto;">
+    </div>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+                var map;
+
+                function initialize() {
+                    var myLatlng = new google.maps.LatLng(6.927079, 79.861244);
+
+                    var myOptions = {
+                        zoom: 8,
+                        center: myLatlng,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+                    map = new google.maps.Map(document.getElementById("Map"), myOptions);
+
+                    var marker = new google.maps.Marker({
+                        draggable: true,
+                        position: myLatlng,
+                        map: map,
+                        title: "Your location"
+                    });
+
+                    google.maps.event.addListener(marker, 'dragend', function (event) {
+                        document.getElementById("lat").value = event.latLng.lat();
+                        document.getElementById("long").value = event.latLng.lng();
+                    });
+
+
+                }
+                google.maps.event.addDomListener(window, "load", initialize());
+    </script>
+</body>
+</html>

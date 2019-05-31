@@ -1,0 +1,112 @@
+﻿@model IEnumerable<vehiclerent.Models.VehicleAvailability>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    <title>Car Rentals</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/css/linearicons.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/css/nice-select.css">
+    <link rel="stylesheet" href="~/Content/css/animate.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Content/css/main.css">
+
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            background-image: url('/Content/img/i2.jpg');
+            background-position: center;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: orangered;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    Current vehicle ID : @Session["vid"]
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleAvailableFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleAvailableTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.longitude)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleAvailableFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleAvailableTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.longitude)
+                </td>
+                <td>
+                    <div class="btn btn-danger">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.AvailabilityId })
+                        </div>
+</td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

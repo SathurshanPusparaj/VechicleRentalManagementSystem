@@ -1,0 +1,142 @@
+﻿@model IEnumerable<vehiclerent.Models.Vehicle>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    <title>Car Rentals</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/css/linearicons.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/css/nice-select.css">
+    <link rel="stylesheet" href="~/Content/css/animate.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Content/css/main.css">
+
+
+</head>
+<body>
+    <header id="header" id="home">
+        <div class="container">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div id="logo">
+                    <a href="index.html"><img src="/Content/img/logo.png" alt="" title="" /></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li style="color:white"><a>Welcome</a></li>
+                        <li><a style="color:white">@Session["tname"]</a></li>
+                        <li>@Html.ActionLink("Signout", "signout", "Tenant", new { @style = "color:white;" })</li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="banner-area relative" id="home">
+
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="about-content col-lg-12">
+                    <h1 class="text-white">
+                        Cars
+                    </h1>
+                    <p class="text-white link-nav"><a href="index.html">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="cars.html"> Cars</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="model-area section-gap" id="cars">
+        <div class="container">
+            <div class="row d-flex justify-content-center pb-40">
+                <div class="col-md-8 pb-40 header-text">
+                    <h1 class="text-center pb-10">Choose your Desired Car Model</h1>
+                    <p class="text-center">
+                        Who are in extremely love with eco friendly system.
+                    </p>
+                </div>
+
+
+            </div>
+            <div class="single-widget search-widget">
+                <div class="default-select" id="default-select" style="width:50%">
+                    @using (Html.BeginForm("viewpagelast", "Tenant", FormMethod.Post))
+                    {
+                        @Html.DropDownList("Search", new List<SelectListItem>
+                    {
+                            new SelectListItem{ Text="price", Value = "price" },
+                            new SelectListItem{ Text="capacity", Value = "capacity" },
+                     })
+                        @Html.TextBox("txtbx")
+                        <input type="submit" value="Search" class="btn btn-warning" style="margin-left:20px;margin-right:20px;" />
+                    }
+                </div>
+                <br />
+                @Html.ActionLink("Search with map", "maping", "Tenant", null, null)
+            </div>
+
+
+            @foreach (var item in Model)
+            {
+                <div class="row align-items-center single-model item">
+                    <div class="col-lg-6 model-left">
+                        <div class="title justify-content-between d-flex">
+                            <h4 class="mt-20">@Html.DisplayFor(modelItem => item.VehicleType)</h4>
+                            <h2>Rs.@Html.DisplayFor(modelItem => item.price)<span>/day</span></h2>
+                        </div>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.VehicleModel)
+                        </p>
+                        <p>
+                            Capacity         : @Html.DisplayFor(modelItem => item.capacity) Person <br>
+                            Doors            : @Html.DisplayFor(modelItem => item.doors) <br>
+                            Air Condition    : @Html.DisplayFor(modelItem => item.air) <br>
+                            Transmission     : @Html.DisplayFor(modelItem => item.transmission)
+                        </p>
+                        @Html.ActionLink("Book This Car Now", "details", new { id = item.VehicleId }, new { @class = "text-uppercase primary-btn" })
+                    </div>
+                    <div class="col-lg-6 model-right">
+                        <img src="@Url.Content(@item.Image)" class="img-fluid" />
+                    </div>
+                </div>
+                    <hr>
+            }
+        </div>
+
+    </section>
+
+    <footer class="footer-area">
+        <div class="container">
+            Copyright &copy; CarRentals.com
+        </div>
+    </footer>
+
+    <script src="~/Content/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="~/Content/js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Content/js/superfish.min.js"></script>
+    <script src="~/Content/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+</body>
+</html>
